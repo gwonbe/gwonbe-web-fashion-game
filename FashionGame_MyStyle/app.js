@@ -10,7 +10,7 @@ const CONFIG = {
 
 /**
  * 카테고리 변경 시 호출되는 메인 함수
- * @param {string} category - 'hair', 'eyes', 'dress', 'top', 'bottom', 'shoes', 'necklace', 'hair-band'
+ * @param {string} category - 'hair', 'eyes', 'dress', 'cloth-1', 'cloth-2', 'shoes', 'necklace', 'hair-band'
  */
 async function changeCategory(category) {
     const grid = document.getElementById('item-grid');
@@ -101,9 +101,9 @@ function applyItem(category, imagePath) {
 
         // 기존 규칙 유지: 원피스 입으면 상의하의 탈의
         if (category === 'dress') {
-            document.getElementById('layer-top').src = "";
-            document.getElementById('layer-bottom').src = "";
-        } else if (category === 'top' || category === 'bottom') {
+            document.getElementById('layer-cloth-1').src = "";
+            document.getElementById('layer-cloth-2').src = "";
+        } else if (category === 'cloth-1' || category === 'cloth-2') {
             document.getElementById('layer-dress').src = "";
         }
     }
