@@ -1,0 +1,149 @@
+/* 폰트 - 한국기계연구원 */
+@font-face {
+    font-family: 'KIMM_Bold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/KIMM_Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* 전체 */
+* {
+    font-family: 'KIMM_Bold';
+}
+
+:root{
+    font-family: Inter,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial;
+    margin: 0;
+    
+    /* Color */
+    --color-classy-palette-1: #f6f8fa;
+    --color-classy-palette-2: #394855;
+    --color-classy-palette-3: #8bafce;
+    --color-classy-palette-4: #ffeaff;
+    --color-classy-palette-5: #e2b2ca;
+
+    /* Font size */
+    --font-medium: 28px;
+    --font-regular: 18px;
+    --font-small: 16px;
+}
+
+body{
+    background: var(--color-classy-palette-1);
+    padding: 28px;
+}
+
+.p-title{
+    font-size: var(--font-medium);
+    margin-bottom: 20px;
+}
+
+/* 캐릭터 영역 */
+
+.layer[src=""], .layer:not([src]) {
+    display: none !important;
+}
+
+.character-container {
+    width: 100%;
+    height: 400px;
+    position: relative;
+    background: white;
+}
+
+.layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* 아이템 리스트 영역 */
+
+.item-grid {
+    height: 200px;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 8px;
+    padding: 12px;
+    overflow-y: scroll; 
+    background: var(--color-classy-palette-1);
+    border: 1px solid var(--color-classy-palette-2);
+    align-content: start;
+}
+
+.item-grid::-webkit-scrollbar { /* 스크롤바 전체 너비 설정 */
+    width: 6px;
+}
+
+.item-grid::-webkit-scrollbar-track { /* 스크롤바 배경 (트랙) */
+    background:var(--color-classy-palette-1); 
+    border-radius: 10px;
+}
+
+.item-grid::-webkit-scrollbar-thumb { /* 스크롤바 손잡이 (핸들) */
+    background: #ccc; 
+    border-radius: 10px;
+}
+
+.item-grid::-webkit-scrollbar-thumb:hover { /* 손잡이에 마우스 올렸을 때 */
+    background: var(--color-classy-palette-5);
+}
+
+/* 개별 아이템 카드 */
+
+.item-card {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border: 1px solid var(--color-classy-palette-2);
+    border-radius: 8px;
+    cursor: pointer;
+    overflow: hidden; /* 이미지가 카드 밖으로 나가지 않게 */
+    background:var(--color-classy-palette-1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.1s ease;
+}
+
+.item-card img { /* 카드 안의 실제 이미지 사이즈 제어 */
+    width: 70%;
+    height: 70%;
+    object-fit: contain; /* 가로세로 비율 유지하며 꽉 차게 */
+}
+
+.item-card:hover {
+    border-color: var(--color-classy-palette-5);
+    transform: scale(1.05);
+}
+
+/* 하단 메뉴 */
+
+.category-menu {
+    display: flex;
+    background: var(--color-classy-palette-3);
+    padding: 10px;
+}
+
+.category-menu button {
+    flex: 1;
+    padding: 10px 0;
+    background: none;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.category-menu button:hover { 
+    color: var(--color-classy-palette-5);
+}
+
+#p-about {
+    padding-top: 100px;
+    padding-bottom: 20px;
+    text-align: center;
+}
