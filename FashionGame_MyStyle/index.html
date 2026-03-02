@@ -8,42 +8,50 @@
 </head>
 <body>
 
-  <div>
+  <div id="game-wrapper">
 
-    <div class="game-wrapper">
-
-        <div class="character-container">
-            <img src="assets/character/body.png" class="layer base">
-            <img id="layer-eyes" class="layer">
-            <img id="layer-hair" class="layer">
-            <img id="layer-hair-band" class="layer">
-            <img id="layer-shoes" class="layer">
-            <img id="layer-cloth-2" class="layer">
-            <img id="layer-cloth-1" class="layer">
-            <img id="layer-dress" class="layer">
-            <img id="layer-necklace" class="layer">
-        </div>
-
-        <nav class="category-menu">
-            <button onclick="changeCategory('eyes')">눈</button>  
-            <button onclick="changeCategory('hair')">헤어</button>
-            <button onclick="changeCategory('dress')">원피스</button>
-            <button onclick="changeCategory('cloth-1')">상의</button>
-            <button onclick="changeCategory('cloth-2')">하의</button>
-            <button onclick="changeCategory('shoes')">신발</button>
-            <button onclick="changeCategory('hair-band')">머리띠</button>
-            <button onclick="changeCategory('necklace')">목걸이</button>
-        </nav>
-
-        <div id="item-grid" class="item-grid">
-        </div>
-
-        <p id="p-about">제작 : @gwonbe</p>
-
+    <div id="mode-menu">
+      <label><input type="radio" name="mode" value="all" checked onchange="toggleMode('all')"> 전체</label>
+      <label><input type="radio" name="mode" value="theme" onchange="toggleMode('theme')"> 테마</label>
     </div>
+
+    <div id="character-container">
+        <img src="assets/character/body.png" class="layer base">
+        <img id="layer-eyes" class="layer">
+        <img id="layer-hair" class="layer">
+        <img id="layer-hair-band" class="layer">
+        <img id="layer-shoes" class="layer">
+        <img id="layer-cloth-2" class="layer">
+        <img id="layer-cloth-1" class="layer">
+        <img id="layer-dress" class="layer">
+        <img id="layer-necklace" class="layer">
+    </div>
+
+    <div id="theme">
+      <div id="theme-carousel">
+        <button class="arrow-btn" onclick="moveTheme(-1)">&#10094;</button>
+        <div id="theme-list-container" class="theme-list-container"></div>
+        <button class="arrow-btn" onclick="moveTheme(1)">&#10095;</button>
+      </div>
+    </div>
+
+    <nav id="category-menu">
+        <button onclick="changeCategory('eyes')">눈</button>  
+        <button onclick="changeCategory('hair')">헤어</button>
+        <button onclick="changeCategory('dress')">원피스</button>
+        <button onclick="changeCategory('cloth-1')">상의</button>
+        <button onclick="changeCategory('cloth-2')">하의</button>
+        <button onclick="changeCategory('shoes')">신발</button>
+        <button onclick="changeCategory('hair-band')">머리띠</button>
+        <button onclick="changeCategory('necklace')">목걸이</button>
+    </nav>
+
+    <div id="item-grid" class="item-grid"></div>
+
+    <p id="p-about">제작 : @gwonbe</p>
 
   </div>
 
-  <script src="app.js"></script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>
