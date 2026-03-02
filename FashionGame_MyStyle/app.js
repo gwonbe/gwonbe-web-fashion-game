@@ -6,6 +6,17 @@ const CONFIG = {
     basePath: 'assets/character'
 };
 
+const CATEGORY_NAMES = {
+    'eyes': '눈',
+    'hair': '헤어',
+    'dress': '원피스',
+    'cloth-1': '상의',
+    'cloth-2': '하의',
+    'shoes': '신발',
+    'hair-band': '머리띠',
+    'necklace': '목걸이'
+};
+
 // 전역 상태 관리
 let currentMode = 'all'; 
 let currentCategory = 'eyes'; 
@@ -15,14 +26,47 @@ let currentThemeIndex = 0;
 function toggleMode(mode) {
     currentMode = mode;
     const themeArea = document.getElementById('theme');
+    const itemGrid = document.getElementById('item-grid');
+    const themeItemList = document.getElementById('theme-item-list');
+    const categoryMenu = document.getElementById('category-menu');
     
-    if (mode === 'theme') {
-        themeArea.style.display = 'block';
-        updateThemeUI(); 
-    } else {
+    if (mode === 'all') {
         themeArea.style.display = 'none';
+        itemGrid.style.display = 'grid';
+        themeItemList.style.display = 'none';
+        categoryMenu.style.display = 'flex';
         changeCategory(currentCategory); 
+    } else {
+        themeArea.style.display = 'block';
+        itemGrid.style.display = 'none';
+        themeItemList.style.display = 'block';
+        categoryMenu.style.display = 'none';
+        updateThemeUI(); 
     }
+}
+
+// 카테고리 변경 및 아이템 로드
+async function changeCategory(category) {
+    currentCategory = category;
+    updateCategoryUI(category);
+
+    const grid = document.getElementById('item-grid');
+    grid.innerHTML = '<p class="loading-text">불러오는 중...</p>';
+    
+    let validImages = [];
+
+    if (currentMode === 'all') {
+        validImages = await scanFolder(category);
+    } else {
+        const selectedTheme = THEME_DATA[currentThemeIndex];
+        if (selectedTheme) { // 파일명이 'category_XXX.png'로 시작하는지 체크
+            validImages = selectedTheme.items
+                .filter(fileName => fileName.toLowerCase().startsWith(category.toLowerCase() + "_"))
+                .map(fileName => `${CONFIG.basePath}/${category}/${fileName}`);
+        }
+    }
+
+    renderItems(category, validImages);
 }
 
 // 카테고리 버튼 UI 업데이트
@@ -38,6 +82,12 @@ function updateCategoryUI(category) {
     });
 }
 
+// 테마 화살표 이동
+function moveTheme(direction) {
+    currentThemeIndex = (currentThemeIndex + direction) % THEME_DATA.length;
+    if (currentThemeIndex < 0) currentThemeIndex += THEME_DATA.length;
+    updateThemeUI();
+}
 
 // 테마 슬라이더 업데이트
 function updateThemeUI() {
@@ -73,38 +123,31 @@ function updateThemeUI() {
     }
 
     changeCategory(currentCategory);
+
+    // 테마 모드일 경우 하단 리스트를 새로 그림
+    if (currentMode === 'theme') {
+        renderThemeAllItems();
+    }
 }
 
-// 테마 화살표 이동
-function moveTheme(direction) {
-    currentThemeIndex = (currentThemeIndex + direction) % THEME_DATA.length;
-    if (currentThemeIndex < 0) currentThemeIndex += THEME_DATA.length;
-    updateThemeUI();
-}
+// 캐릭터 아이템 착용
+function applyItem(category, imagePath) {
+    const layer = document.getElementById(`layer-${category}`);
+    if (!layer) return;
 
-// 카테고리 변경 및 아이템 로드
-async function changeCategory(category) {
-    currentCategory = category;
-    updateCategoryUI(category);
-
-    const grid = document.getElementById('item-grid');
-    grid.innerHTML = '<p class="loading-text">불러오는 중...</p>';
-    
-    let validImages = [];
-
-    if (currentMode === 'all') {
-        validImages = await scanFolder(category);
+    if (layer.src && layer.src.includes(imagePath)) {
+        layer.src = "";
     } else {
-        const selectedTheme = THEME_DATA[currentThemeIndex];
-        if (selectedTheme) {
-            // 파일명이 'category_XXX.png'로 시작하는지 체크
-            validImages = selectedTheme.items
-                .filter(fileName => fileName.toLowerCase().startsWith(category.toLowerCase() + "_"))
-                .map(fileName => `${CONFIG.basePath}/${category}/${fileName}`);
+        layer.src = imagePath;
+        // 의상 간섭 로직
+        if (category === 'dress') {
+            document.getElementById('layer-cloth-1').src = "";
+            document.getElementById('layer-cloth-2').src = "";
+        } else if (category === 'cloth-1' || category === 'cloth-2') {
+            const dressLayer = document.getElementById('layer-dress');
+            if (dressLayer) dressLayer.src = "";
         }
     }
-
-    renderItems(category, validImages);
 }
 
 // 폴더 스캔 로직 (전체 모드용)
@@ -154,24 +197,54 @@ function renderItems(category, images) {
     });
 }
 
-// 캐릭터 아이템 착용
-function applyItem(category, imagePath) {
-    const layer = document.getElementById(`layer-${category}`);
-    if (!layer) return;
+// 테마 모드용 전체 아이템 렌더링 함수
+function renderThemeAllItems() {
+    const container = document.getElementById('theme-item-list');
+    container.innerHTML = '';
+    
+    const selectedTheme = THEME_DATA[currentThemeIndex];
+    if (!selectedTheme) return;
 
-    if (layer.src && layer.src.includes(imagePath)) {
-        layer.src = "";
-    } else {
-        layer.src = imagePath;
-        // 의상 간섭 로직
-        if (category === 'dress') {
-            document.getElementById('layer-cloth-1').src = "";
-            document.getElementById('layer-cloth-2').src = "";
-        } else if (category === 'cloth-1' || category === 'cloth-2') {
-            const dressLayer = document.getElementById('layer-dress');
-            if (dressLayer) dressLayer.src = "";
+    // 정의된 모든 카테고리를 순회하며 로우 생성
+    const categories = ['eyes', 'hair', 'dress', 'cloth-1', 'cloth-2', 'shoes', 'hair-band', 'necklace'];
+
+    categories.forEach(cat => {
+        // 해당 카테고리에 속하는 아이템 필터링
+        const catItems = selectedTheme
+            .items
+            .filter(fileName => fileName.toLowerCase().startsWith(cat.toLowerCase() + "_"))
+            .map(fileName => `${CONFIG.basePath}/${cat}/${fileName}`);
+
+        if (catItems.length > 0) {
+            const row = document.createElement('div');
+            row.className = 'theme-row';
+
+            // 카테고리 이름
+            const label = document.createElement('div');
+            label.className = 'theme-row-label';
+            label.innerText = CATEGORY_NAMES[cat] || cat;
+            
+            // 아이템들 가로 스크롤 영역
+            const itemsWrapper = document.createElement('div');
+            itemsWrapper.className = 'theme-row-items';
+
+            catItems.forEach(path => {
+                const itemCard = document.createElement('div');
+                itemCard.className = `item-card ${cat}`;
+                
+                const img = document.createElement('img');
+                img.src = path;
+                img.onclick = () => applyItem(cat, path); // 클릭 시 착용
+
+                itemCard.appendChild(img);
+                itemsWrapper.appendChild(itemCard);
+            });
+
+            row.appendChild(label);
+            row.appendChild(itemsWrapper);
+            container.appendChild(row);
         }
-    }
+    });
 }
 
 // HTML에서 호출하는 함수들을 window 객체에 할당

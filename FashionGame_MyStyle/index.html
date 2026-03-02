@@ -28,14 +28,6 @@
         <img id="layer-necklace" class="layer">
     </div>
 
-    <div id="theme">
-      <div id="theme-carousel">
-        <button class="arrow-btn" onclick="moveTheme(-1)">&#10094;</button>
-        <div id="theme-list-container" class="theme-list-container"></div>
-        <button class="arrow-btn" onclick="moveTheme(1)">&#10095;</button>
-      </div>
-    </div>
-
     <nav id="category-menu">
         <button onclick="changeCategory('eyes')">눈</button>  
         <button onclick="changeCategory('hair')">헤어</button>
@@ -48,6 +40,16 @@
     </nav>
 
     <div id="item-grid" class="item-grid"></div>
+
+    <div id="theme">
+      <div id="theme-carousel">
+        <button class="arrow-btn" onclick="moveTheme(-1)">&#10094;</button>
+        <div id="theme-list-container" class="theme-list-container"></div>
+        <button class="arrow-btn" onclick="moveTheme(1)">&#10095;</button>
+      </div>
+    </div>
+
+    <div id="theme-item-list" style="display: none;"></div>
 
     <p id="p-about">제작 : @gwonbe</p>
 
