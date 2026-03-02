@@ -136,17 +136,16 @@ function renderItems(category, images) {
     grid.innerHTML = '';
 
     if (images.length === 0) {
-        grid.innerHTML = '<p class="empty-text">아이템이 없습니다.</p>';
+        grid.innerHTML = '<p class="empty-text">No Item</p>';
         return;
     }
 
     images.forEach(path => {
         const itemCard = document.createElement('div');
-        itemCard.className = 'item-card';
+        itemCard.className = `item-card ${category}`; 
+        
         const img = document.createElement('img');
         img.src = path;
-        img.width = 60;
-        img.height = 60;
         img.loading = "lazy";
         
         itemCard.onclick = () => applyItem(category, path);
