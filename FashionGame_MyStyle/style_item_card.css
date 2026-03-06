@@ -78,19 +78,19 @@
 /* # 신발 */
 .item-card.shoes img {
     transform-origin: center 100%;
-    transform: scale(4.0);
+    transform: scale(3.0);
 }
 .item-card.shoes:hover img {
-    transform: scale(4.5);
+    transform: scale(3.5);
 }
 
 /* # 머리띠 */
 .item-card.hair-band img {
-    object-position: center 10%;
-    transform: scale(1.9);
+    object-position: center 0%;
+    transform: scale(1.0);
 }
 .item-card.hair-band:hover img {
-    transform: scale(2.2);
+    transform: scale(1.5);
 }
 
 /* # 목걸이 */
