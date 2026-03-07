@@ -253,8 +253,20 @@ body{
 
 /* 하단 */
 
-#p-about {
+#div-github {
     padding-top: 100px;
     padding-bottom: 20px;
     text-align: center;
+}
+
+#github-btn {
+    background-color: var(--color-classy-palette-4);
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+#github-btn:hover {
+    background-color: var(--color-classy-palette-5);
 }
