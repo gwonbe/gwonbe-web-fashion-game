@@ -8,6 +8,7 @@ const CONFIG = {
 
 const CATEGORY_NAMES = {
     'eyes': '눈',
+    'lips': '입',
     'hair': '헤어',
     'dress': '원피스',
     'cloth-1': '상의',

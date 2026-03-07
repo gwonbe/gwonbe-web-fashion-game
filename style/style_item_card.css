@@ -35,6 +35,16 @@
     transform: scale(3.8);
 }
 
+/* # 입 */
+.item-card.lips img {
+    transform-origin: center 35%;
+    transform: scale(6.5);
+    object-fit: contain;
+}
+.item-card.lips:hover img {
+    transform: scale(7.0);
+}
+
 /* # 헤어 */
 .item-card.hair img {
     transform-origin: center 20%;
