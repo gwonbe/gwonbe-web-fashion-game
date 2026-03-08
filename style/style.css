@@ -64,7 +64,6 @@ body{
 #category-menu button {
     width: 100%;
     padding: 8px;
-    margin: 2px;
     cursor: pointer;
     background-color: var(--color-classy-palette-3);
     border: 1px solid var(--color-classy-palette-3);
@@ -85,13 +84,28 @@ body{
 .item-grid {
     height: 200px;
     display: grid;
-    grid-template-columns: repeat(9, 1fr);
     gap: 8px;
     padding: 12px;
     overflow-y: scroll; 
     background: var(--color-classy-palette-1);
     border: 1px solid var(--color-classy-palette-2);
     align-content: start;
+    grid-template-columns: repeat(4, 1fr);
+}
+@media (min-width: 480px) {
+    .item-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+@media (min-width: 768px) {
+    .item-grid {
+        grid-template-columns: repeat(7, 1fr);
+    }
+}
+@media (min-width: 1024px) {
+    .item-grid {
+        grid-template-columns: repeat(9, 1fr);
+    }
 }
 
 .item-grid::-webkit-scrollbar { /* 스크롤바 전체 너비 설정 */
