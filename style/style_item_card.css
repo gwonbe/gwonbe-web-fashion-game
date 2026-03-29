@@ -95,11 +95,11 @@
 }
 
 /* # 머리띠 */
-.item-card.hair-band img {
+.item-card.hairband img {
     object-position: center 0%;
     transform: scale(1.0);
 }
-.item-card.hair-band:hover img {
+.item-card.hairband:hover img {
     transform: scale(1.5);
 }
 

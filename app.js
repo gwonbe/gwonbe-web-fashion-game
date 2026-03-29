@@ -14,7 +14,7 @@ const CATEGORY_NAMES = {
     'cloth-1': '상의',
     'cloth-2': '하의',
     'shoes': '신발',
-    'hair-band': '머리띠',
+    'hairband': '머리띠',
     'necklace': '목걸이'
 };
 
@@ -207,7 +207,7 @@ function renderThemeAllItems() {
     if (!selectedTheme) return;
 
     // 정의된 모든 카테고리를 순회하며 로우 생성
-    const categories = ['eyes', 'hair', 'dress', 'cloth-1', 'cloth-2', 'shoes', 'hair-band', 'necklace'];
+    const categories = ['eyes', 'hair', 'dress', 'cloth-1', 'cloth-2', 'shoes', 'hairband', 'necklace'];
 
     categories.forEach(cat => {
         // 해당 카테고리에 속하는 아이템 필터링
