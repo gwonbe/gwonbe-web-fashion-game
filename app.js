@@ -154,23 +154,38 @@ function applyItem(category, imagePath) {
 // 폴더 스캔 로직 (전체 모드용)
 async function scanFolder(category) {
     const found = [];
+
     for (let i = 1; i <= CONFIG.maxSearchLimit; i++) {
         const serial = String(i).padStart(CONFIG.serialPadding, '0');
-        const fileName = `${category}_${serial}.png`;
-        const filePath = `${CONFIG.basePath}/${category}/${fileName}`;
 
-        try {
-            const response = await fetch(filePath, { method: 'HEAD' });
-            if (response.ok) {
-                found.push(filePath);
-            } else {
-                break; 
+        let filePath = null;
+
+        for (const ext of ['webp', 'png']) {
+            const fileName = `${category}_${serial}.${ext}`;
+            const path = `${CONFIG.basePath}/${category}/${fileName}`;
+
+            try {
+                const response = await fetch(path, { method: 'HEAD' });
+                if (response.ok) {
+                    filePath = path;
+                    break;
+                }
+            } catch (error) {
+                // 다음 확장자 시도
             }
-        } catch (error) {
-            break;
         }
-        if (i % 20 === 0) await new Promise(r => setTimeout(r, 0));
+
+        if (filePath) {
+            found.push(filePath);
+        } else {
+            break; // 찾는 확장자 파일이 없으면 종료
+        }
+
+        if (i % 20 === 0) {
+            await new Promise(r => setTimeout(r, 0));
+        }
     }
+
     return found;
 }
 
